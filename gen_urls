@@ -1,0 +1,9 @@
+#
+
+for num in `seq 2006 2014`
+do
+        echo http://www.minetad.gob.es/energia/balances/Publicaciones/ElectricasMensuales/${num}/{Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiempre,Octubre,Noviembre,Diciembre}/${num}
+done
+
+echo http://www.minetad.gob.es/energia/balances/Publicaciones/ElectricasMensuales/2015/{Enero,Febrero,Marzo,Abril}
+
