@@ -2,6 +2,5 @@ unzip temp/Abril_2006.zip *127* -d temp
 grep ALAVA *127P* | awk '{print $6}'
 w3m http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm | grep -n CODIGO | cut -d ':' -f 1  # obtiene la linea
 
-w3m http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm >> cod_ccaa_brutos
-$linea_0=$(cat cod_ccaa_brutos | grep -n CODIGO | cut -d ':' -f 1)
-sed '$linea0q;d' cod_ccaa_brutos
+w3m http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm > cod_ccaa_brutos
+
