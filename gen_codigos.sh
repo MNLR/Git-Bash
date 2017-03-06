@@ -5,7 +5,7 @@ tail -n +$linea0 cod_ccaa_bruto | head -n 22 | grep [0-9] | sed 's/í/i/g' | sed
 rm cod_ccaa_bruto
 
 cat cod_ccaa | awk '{print $1}' > cod_ccaa_n
-cat cod_ccaa | cut -d' ' -f2-10 | sed 's/ /_/g'  > cod_ccaa_c
+cat cod_ccaa | cut -d' ' -f2-10 | sed 's/ //g' | sed 's/-/_/g' > cod_ccaa_c
 rm cod_ccaa
 
 # Obtencion de los codigos de provincia
@@ -22,5 +22,5 @@ rm cod_p
 
 #cat cod_p_paux | sed "s/ /_/g" | sed "s/,/_/g" > cod_p_p
 cat cod_p_paux | awk '{print $1 $2 $3 $4}' | sed "s/,/_/g" | sed "s/\//_/g" | sed "s/è/e/g" | sed "s/Á/A/g" > cod_p_p
-
+rm cod_p_paux
 
