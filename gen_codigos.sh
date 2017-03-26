@@ -1,3 +1,5 @@
+
+cd temp
 # Obtencion de los codigos de comunidad autonoma
 w3m http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm > cod_ccaa_bruto
 linea0=$(cat cod_ccaa_bruto | grep -n "comunidades y ciudades aut" | cut -d ':' -f 1)
@@ -26,10 +28,11 @@ cat cod_p | grep -Eo "[^0-9]+" > cod_p_paux
 rm cod_p
 
 #cat cod_p_paux | sed "s/ /_/g" | sed "s/,/_/g" > cod_p_p
-cat cod_p_paux | awk '{print $1 $2 $3 $4}' | sed "s/,/_/g" | sed "s/\//_/g" | sed "s/è/e/g" | sed "s/Á/A/g" > cod_p_p
+cat cod_p_paux | awk '{print $1 $2 $3 $4}' | sed "s/,/_/g" | sed "s/\//_/g" | sed "s/è/e/g" | sed "s/Á/A/g" > pp
 rm cod_p_paux
 
 # Por ultimo pegamos ambas columnas con una barra baja separandolas
-paste --delimiters=_ cod_p_n cod_p_p > cod_p
+paste --delimiters=_ cod_p_n pp > cod_pp
 
 rm cod_p_n # NO se borran los nombres de las provincias, se usan despues
+cd ..
