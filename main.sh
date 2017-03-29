@@ -1,5 +1,4 @@
 bash gen_urls
 mkdir temp
-wget -i temp/urls -P temp/
-rm urls
+# pasado a script
 bash gen_dirs
