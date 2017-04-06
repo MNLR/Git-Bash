@@ -1,6 +1,10 @@
 # Genera el listado de urls para descargar los ficheros automaticamente mediante wget
 cd temp
-rm urls
+
+if [ -f urls ]
+then
+        rm urls
+fi
 
 for num in `seq 2006 2008`
 do

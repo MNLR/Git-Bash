@@ -1,3 +1,4 @@
+# Lee y procesa los nombres de comunidad autonoma y provincia anadiendo los codigos
 
 cd temp
 # Obtencion de los codigos de comunidad autonoma
@@ -32,7 +33,10 @@ cat cod_p_paux | awk '{print $1 $2 $3 $4}' | sed "s/,/_/g" | sed "s/\//_/g" | se
 rm cod_p_paux
 
 # Por ultimo pegamos ambas columnas con una barra baja separandolas
-paste --delimiters=_ cod_p_n pp > cod_pp
+paste --delimiters=_ cod_p_n pp > socod_pp
+# Y ordenamos cod_pp por codigo para aprovechar la estructura en los zip
+sort socod_pp > cod_pp
+rm socod_pp
 
 rm cod_p_n # NO se borran los nombres de las provincias, se usan despues
 cd ..
