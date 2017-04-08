@@ -1,4 +1,4 @@
-# Lee y procesa los nombres de comunidad autonoma y provincia anadiendo los codigos
+# Lee y procesa los nombres de comunidad autonoma y provincia utilizando w3m anadiendo los codigos a cada nombre
 
 cd temp
 # Obtencion de los codigos de comunidad autonoma

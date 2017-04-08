@@ -20,7 +20,7 @@ fi
 
 while read c_p; do
 	p=$(echo $c_p | grep -Fof temp/pp)
-	ca=$(grep $p p-ca | cut -f 2 | head -1)  # obtenemos la ca, no es match completo.
+	ca=$(grep $p p-ca.dat | cut -f 2 | head -1)  # obtenemos la ca, no es match completo.
 	ca_completo=$(grep $ca temp/cod_ccaa)
 	echo "Este es ca:"
 	echo "$ca"
