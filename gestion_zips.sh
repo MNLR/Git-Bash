@@ -5,8 +5,6 @@ DIR=$1
 ppal=$PWD
 cd temp/zips
 
-rm *txt
-
 # Generamos un fichero con las fechas para las series temporales (columna)
 echo {2006..2015}0{1..9} | fold -s | fold -s -w6 | sed '/^\s*$/d' > auxtiempo
 echo {2006..2015}{10..12} | fold -s | fold -s -w6 | sed '/^\s*$/d' >> auxtiempo
@@ -56,7 +54,7 @@ do
 			#dato[$num]=$(awk -v var="$num" -F" " '{print var " "}' aux3)
 			dato[$num]=$(cut -d' ' -f"$num" aux3 | sed 's/\.//g' )
 			dato_completo=$dato_temporal$espacio${dato[$num]}
-			echo $dato_completo >> $DIR/$provincia/${tipo[$num]}
+			echo $dato_completo >> $provincia/${tipo[$num]}
 		done
 
 		cont=$((cont + sumar))

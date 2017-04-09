@@ -11,11 +11,6 @@ numero=$((10**base))
 
 sumar=1
 
-if [ -f temp/zips ]
-then
-        rm temp/zips
-fi
-
 mkdir temp/zips
 
 while read url; do

@@ -11,7 +11,7 @@ do
 		i) INF=1;;
                 I) INF=2;;
                 A) AUT=1
-		   INF=0;
+		   INF=0
 		;;
         esac
 done
@@ -29,7 +29,7 @@ then
 	read -p "El directorio especificado ( $DIR ) ya existe. Espere errores si no lo borra: Si alguna serie se comenzo a escribir se seguira escribiendo en ella. ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar)." resp
 	case $resp in
     		s|S )
-        		printf "Se borrara $DIR. \n"
+        		printf "Se ha borrado $DIR. \n"
 			rm -r $DIR
 			mkdir $DIR
     		;;
@@ -45,49 +45,45 @@ else
 	mkdir $DIR
 fi
 
-# Comprobacion directorio
+# Comprobacion directorio temp
 if [ -d temp ]
 then
-        read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Espere errores si no lo borra.  ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar) " 
+        read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Espere errores si no lo borra.  ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar) " resp
         case $resp in
                 s|S )
-                        echo "Se borrara temp. \n"
-                        rm -r $DIR
-                        mkdir $DIR
+                        printf "Se ha borrado temp. \n"
+                        rm -r temp
+                        mkdir temp
                 ;;
                 n|N )
-                        echo "Se sobreescribira en temp. \n"
+                        printf "Se sobreescribira en temp. \n"
                 ;;
                 *)
-                        echo "Ejecucion cancelada. \n"
+                        printf "Ejecucion cancelada. \n"
+			exit
+		;;
         esac
 else
         mkdir temp
 fi
 
 
-
-
-
-
-if [$INF -eq 1] || [$INF -eq 2]
+if [ $INF == 1 ] || [ $INF == 2 ]
 then
-	echo "Descargando archivos... \n"
+	printf "Descargando archivos... \n"
 fi
-
 bash gen_urls.sh
-mkdir temp
 bash descarga_zips.sh
 
-if [$INF -eq 1] || [$INF -eq 2]
+if [ $INF == 1 ] || [ $INF == 2 ]
 then
-        echo "Generando estructura de directorios... \n"
+        printf "Generando estructura de directorios... \n"
 fi
-bash gen_codigos.sh
+bash gen_codigos.sh $DIR
 bash gen_dirs.sh $DIR
 
-if [$INF -eq 1] || [$INF -eq 2]
+if [ $INF == 1 ] || [ $INF == 2 ]
 then
-        echo "Desempaquetando archivos y generando series temporales... \n"
+        printf "Desempaquetando archivos y generando series temporales... \n"
 fi
 bash gestion_zips.sh $DIR
