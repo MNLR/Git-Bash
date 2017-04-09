@@ -1,1 +1,51 @@
-# tarea
+INTRODUCCION
+
+Tarea de la shell de UNIX y Git - Métodos de Gestión de la Información
+Autor: Mikel Néstor Legasa Ríos
+
+Programa de Bash para acceder a las series temporales mensuales de producción eléctrica por provincia publicadas por el Ministerio de Industria y de las direcciones en
+
+http://www.minetur.gob.es/energia/balances/Publicaciones/ElectricasMensuales/Paginas/ElectricasMensuales.aspx
+
+Descarga todos los archivos .zip de esta dirección y obtiene de ellos la tabla
+
+1.2.7 PRODUCCION BRUTA DE ENERGIA TERMOELECTRICA POR PROVINCIAS SEGUN EL COMBUSTIBLE
+
+Genera una estructura de directorios DIR/ID_NombreComunidadAutonoma/ID_NombreProvincia , donde los ID se obtienen de las páginas
+
+http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm
+http://www.ine.es/daco/daco42/codmun/cod_provincia.htm
+
+y el directorio principal, DIR, puede ser especificado por el usuario (ver opciones). La relación de pertenencia provincia-comunidadautonoma se obtiene de la tabla p-ca.dat. Se procesarán los datos de la tabla y se crearán dentro de cada directorio las series temporales en un fichero por cada tipo de energía termoeléctrica, incluyendo el total, y con el formato
+
+200601 60221
+200602 62933
+........
+
+_______________________________________________________________________________________________________________
+
+EJECUCIÓN
+
+Para ejecutar el programa:
+	bash main.sh
+Esto ejecutará el programa principal y generará la estructura de directorios en el directorio por defecto, PETC
+
+Si se quiere especificar el directorio:
+	bash main.sh -d directorio
+
+Ejemplo: 
+	bash main.sh -d /home/Usuario/Midirectorio
+
+_______________________________________________________________________________________________________________
+
+OPCIONES
+	-d [directorio]
+		Ruta ABSOLUTA del directorio en el que se desea crear las series temporales
+	-s 
+		No se dará ningún mensaje sobre el progreso.
+	-i	
+		Se mostrará información mínima sobre el progreso.
+	-I	
+		Se mostrará información total sobre el progreso, incluyendo toda la información dada por  los comandos ejecutados.
+	-A	No se harán comprobaciones iniciales sobre los directorios temp y DIR. Se sobreescribirán el directorio DIR especificado y temp sin hacer preguntas. Úsese con cuidado, puede causar pérdida de información.
+

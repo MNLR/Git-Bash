@@ -1,3 +1,14 @@
+#!/bin/bash
+#
+# main.sh
+# Autor: Mikel Néstor Legasa Ríos
+#
+# Script principal.
+# Ver README adjunto para las opciones en detalle.
+# Ejemplo de ejecucion:
+# bash main.sh -d ~/midirectorio
+
+
 DIR=$PWD/PETC
 AUT=0
 INF=1
