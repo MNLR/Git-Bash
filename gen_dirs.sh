@@ -3,11 +3,10 @@
 # ordenadas de acuerdo a cod_p. Esto permite asignar eficientemente las series temporales
 # a los directorios correspondientes
 
-ppal="PETC"
-mkdir $ppal
+DIR=$1
 
 while read c; do
-  	mkdir $ppal/$c
+  	mkdir $DIR/$c
 done <temp/cod_ccaa
 
 cont=1
@@ -31,9 +30,9 @@ while read c_p; do
 	echo "$c_p"
 
 	# Crea el directorio:
-        mkdir $ppal/$ca_completo/$c_p
-	# Guarda la direccion:
-	echo "$ppal/$ca_completo/$c_p" >> temp/dirs
+        mkdir $DIR/$ca_completo/$c_p
+	# Guarda la direccion del directorio:
+	echo "$DIR/$ca_completo/$c_p" >> temp/dirs
 
 	cont=$((cont + sumar))
 done <temp/cod_pp

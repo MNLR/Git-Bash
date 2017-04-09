@@ -1,5 +1,7 @@
 # Descomprime, extrae y escribe la informacion contenida en los zip descargados en forma de serie temporal.
 
+DIR=$1
+
 ppal=$PWD
 cd temp/zips
 
@@ -13,7 +15,7 @@ rm auxtiempo
 
 cont_temporal=1
 
-# Extraccion
+# Extraccion y procesado
 for zip in *.zip
 do
 	echo "$zip"
@@ -54,7 +56,7 @@ do
 			#dato[$num]=$(awk -v var="$num" -F" " '{print var " "}' aux3)
 			dato[$num]=$(cut -d' ' -f"$num" aux3 | sed 's/\.//g' )
 			dato_completo=$dato_temporal$espacio${dato[$num]}
-			echo $dato_completo >> $ppal/$provincia/${tipo[$num]}
+			echo $dato_completo >> $DIR/$provincia/${tipo[$num]}
 		done
 
 		cont=$((cont + sumar))
