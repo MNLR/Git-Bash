@@ -47,7 +47,7 @@ do
 	while read provincia; do
 		if [ $INF == 2 ]
         	then
-			printf "Escribiendo en $provincia \n"
+			printf "Escribiendo en $provincia..."
 		fi
 		# Para cada provincia:
 		sed "${cont}q;d" aux2 > aux3  # Cada linea corresponde a una provincia
@@ -65,7 +65,6 @@ do
 
 		for num in `seq 1 7`  # Separamos cada columna (campo) de la fila aux3
 		do
-			#dato[$num]=$(awk -v var="$num" -F" " '{print var " "}' aux3)
 			dato[$num]=$(cut -d' ' -f"$num" aux3 | sed 's/\.//g' )
 			dato_completo=$dato_temporal$espacio${dato[$num]}
 			echo $dato_completo >> $provincia/${tipo[$num]}
