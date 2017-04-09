@@ -16,7 +16,7 @@ do
         esac
 done
 
-read -p "Se escribiran las series temporales en $DIR. Introduzca s para continuar." resp
+read -p "Se escribiran las series temporales en $DIR. Introduzca s para continuar: " resp
 if [ "$resp" != "s" ]
 then
 	printf "Ejecucion cancelada. \n"
@@ -26,7 +26,7 @@ fi
 # Comprobacion directorio
 if [ -d $DIR ]
 then
-	read -p "El directorio especificado ( $DIR ) ya existe. Espere errores si no lo borra: Si alguna serie se comenzo a escribir se seguira escribiendo en ella. ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar)." resp
+	read -p "El directorio especificado ( $DIR ) ya existe. Espere errores si no lo borra: Si alguna serie se comenzo a escribir se seguira escribiendo en ella. ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar): " resp
 	case $resp in
     		s|S )
         		printf "Se ha borrado $DIR. \n"
@@ -48,7 +48,7 @@ fi
 # Comprobacion directorio temp
 if [ -d temp ]
 then
-        read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Espere errores si no lo borra.  ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar) " resp
+        read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Espere errores si no lo borra.  ¿Quiere borrarlo? (s/n) (cualquier otro para cancelar): " resp
         case $resp in
                 s|S )
                         printf "Se ha borrado temp. \n"
@@ -70,20 +70,22 @@ fi
 
 if [ $INF == 1 ] || [ $INF == 2 ]
 then
-	printf "Descargando archivos... \n"
+	printf "\n -----> 1) Descargando archivos... \n \n"
 fi
+
 bash gen_urls.sh
-bash descarga_zips.sh
+bash descarga_zips.sh $INF
 
 if [ $INF == 1 ] || [ $INF == 2 ]
 then
-        printf "Generando estructura de directorios... \n"
+        printf "\n -----> 2) Generando estructura de directorios... \n \n"
 fi
+
 bash gen_codigos.sh $DIR
-bash gen_dirs.sh $DIR
+bash gen_dirs.sh $DIR $INF
 
 if [ $INF == 1 ] || [ $INF == 2 ]
 then
-        printf "Desempaquetando archivos y generando series temporales... \n"
+        printf "\n -----> 3) Desempaquetando archivos y generando series temporales... \n \n"
 fi
-bash gestion_zips.sh $DIR
+bash gestion_zips.sh $DIR $INF

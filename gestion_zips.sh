@@ -1,6 +1,15 @@
 # Descomprime, extrae y escribe la informacion contenida en los zip descargados en forma de serie temporal.
 
 DIR=$1
+INF=$2
+
+if [ $INF == 1 ] || [ $INF == 0 ]
+then
+        opcion=-qq
+else
+        opcion=
+fi
+
 
 ppal=$PWD
 cd temp/zips
@@ -16,13 +25,14 @@ cont_temporal=1
 # Extraccion y procesado
 for zip in *.zip
 do
-	echo "$zip"
 	# Extraccion datos
-	unzip -j $zip *127P*
-	echo "-----"
-	echo "Se ha descomprimido:"
-	ls *txt
-	echo "-----"
+	unzip -j $opcion $zip *127P*
+	if [ $INF == 1 ] || [ $INF == 2 ]
+	then
+		printf "Se esta procesando "
+		ls *txt
+		printf "\n"
+	fi
 
 	# CREACION SERIES TEMPORALES
 
@@ -35,6 +45,10 @@ do
 	sumar=1
 	espacio=" "
 	while read provincia; do
+		if [ $INF == 2 ]
+        	then
+			printf "Escribiendo en $provincia \n"
+		fi
 		# Para cada provincia:
 		sed "${cont}q;d" aux2 > aux3  # Cada linea corresponde a una provincia
 		dato_temporal=$(sed "${cont_temporal}q;d" tiempo)  # Anadimos tiempo
