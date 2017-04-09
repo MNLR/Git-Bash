@@ -10,9 +10,7 @@ do
                 s) INF=0;;
 		i) INF=1;;
                 I) INF=2;;
-                A) AUT=1
-		   INF=0
-		;;
+                A) AUT=1;;
         esac
 done
 
@@ -69,10 +67,16 @@ then
 	else
        		mkdir temp
 	fi
-else
-	rm -r $DIR
+else  # Modo automatico
+        if [ -d $DIR ]
+        then
+		rm -r $DIR
+	fi
+        if [ -d temp ]
+        then
+                rm -r temp
+        fi
 	mkdir $DIR
-	rm -r temp
 	mkdir temp
 fi
 
