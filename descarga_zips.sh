@@ -19,6 +19,6 @@ fi
 mkdir temp/zips
 
 while read url; do
-        wget $url -O temp/zips/"$numero".zip    # ordena los archivos para descomprimirlos en orden
+        wget $url -O temp/zips/"$numero".zip    #los archivos se nombran para descomprimirlos en orden
 	numero=$((numero + sumar))
 done <temp/urls

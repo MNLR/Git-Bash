@@ -47,12 +47,12 @@ do
                 tipo[4]="Fuel.txt"
                 tipo[5]="GasNatural.txt"
                 tipo[6]="Otros.txt"
+		tipo[7]="Total.txt"
 
-		for num in `seq 1 6`  # Separamos cada columna (campo) de la fila aux3
+		for num in `seq 1 7`  # Separamos cada columna (campo) de la fila aux3
 		do
 			#dato[$num]=$(awk -v var="$num" -F" " '{print var " "}' aux3)
-			dato[$num]=$(cut -d' ' -f"$num" aux3)
-			#echo ${dato[$num]}
+			dato[$num]=$(cut -d' ' -f"$num" aux3 | sed 's/\.//g' )
 			dato_completo=$dato_temporal$espacio${dato[$num]}
 			echo $dato_completo >> $ppal/$provincia/${tipo[$num]}
 		done
