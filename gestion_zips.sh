@@ -45,10 +45,6 @@ do
 	sumar=1
 	espacio=" "
 	while read provincia; do
-		if [ $INF == 2 ]
-        	then
-			printf "Escribiendo en $provincia..."
-		fi
 		# Para cada provincia:
 		sed "${cont}q;d" aux2 > aux3  # Cada linea corresponde a una provincia
 		dato_temporal=$(sed "${cont_temporal}q;d" tiempo)  # Anadimos tiempo
@@ -68,6 +64,10 @@ do
 			dato[$num]=$(cut -d' ' -f"$num" aux3 | sed 's/\.//g' )
 			dato_completo=$dato_temporal$espacio${dato[$num]}
 			echo $dato_completo >> $provincia/${tipo[$num]}
+			if [ $INF == 2 ]
+        		then
+				printf "  Escribiendo $dato_completo en $provincia/${tipo[$num]}... \n"
+			fi
 		done
 
 		cont=$((cont + sumar))

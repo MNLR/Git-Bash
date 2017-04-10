@@ -47,5 +47,7 @@ OPCIONES
 		Se mostrará información mínima sobre el progreso.
 	-I	
 		Se mostrará información total sobre el progreso, incluyendo toda la información dada por  los comandos ejecutados.
-	-A	No se harán comprobaciones iniciales sobre los directorios temp y DIR. Se sobreescribirán el directorio DIR especificado y temp sin hacer preguntas. Úsese con cuidado, puede causar pérdida de información.
-
+	-A	
+		No se harán comprobaciones iniciales sobre los directorios temp y DIR. Se sobreescribirán el directorio DIR especificado y temp sin hacer preguntas. Úsese con cuidado, puede causar pérdida de información.
+	-n
+		No se borrará el directorio temp al finalizar la ejecucion.

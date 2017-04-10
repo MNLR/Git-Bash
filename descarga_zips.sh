@@ -2,6 +2,8 @@
 
 INF=$1
 
+bash gen_urls.sh # Generamos el fichero con las url.
+
 # Primero aseguramos que los archivos se ordenen correctamente
 lineas=$(cat temp/urls | wc -l)
 base=${#lineas}
