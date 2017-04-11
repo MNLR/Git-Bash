@@ -35,7 +35,7 @@ if [ $INF == 1 ] || [ $INF == 2 ]
 then
 	printf "\n -----> 1) Descargando archivos... \n \n"
 fi
-bash descarga_zips.sh $INF
+bash descarga_zips.sh $DIR $INF 1
 
 if [ $INF == 1 ] || [ $INF == 2 ]
 then

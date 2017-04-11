@@ -4,7 +4,9 @@
 # 1 informacion moderada
 # 2 toda la informacion
 
-INF=$1
+DIR=$1
+INF=$2
+INCOMPLETA=$3
 
 bash gen_urls.sh # Generamos el fichero con las url.
 
@@ -12,9 +14,21 @@ bash gen_urls.sh # Generamos el fichero con las url.
 lineas=$(cat temp/urls | wc -l)
 base=${#lineas} # numero de cifras que tiene el numero de lineas. Esto evita problemas de tipo 10.zip 9.zip
 numero=$((10**base))
-
+progreso=0
 sumar=1
-mkdir temp/zips
+
+if [ $INCOMPLETA == 1 ]
+then
+	CONTINUAREN=$( tail -1 $DIR/.progreso | cut -d"_" -f 2 )
+        numero=$((numero + CONTINUAREN))
+	CONTINUAREN=$((CONTINUAREN + sumar))
+	tail -n +$CONTINUAREN temp/urls > temp/auxurls
+	rm temp/urls
+	mv temp/auxurls temp/urls
+	progreso=$((CONTINUAREN - sumar))
+else
+	mkdir temp/zips
+fi
 
 while read url; do
 	if [ $INF == 0 ] || [ $INF == 1 ]
@@ -27,5 +41,8 @@ while read url; do
 	else
 		 wget $url -O temp/zips/"$numero".zip
 	fi
+
 	numero=$((numero + sumar))
+	progreso=$((progreso + sumar))
+	echo "1_$progreso" >> $DIR/.progreso
 done <temp/urls
