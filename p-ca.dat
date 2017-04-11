@@ -5,7 +5,7 @@ Alicante_Alacant	ComunitatValenciana
 Almeria	Andalucia
 Avila	CastillayLeon
 Badajoz	Extremadura
-Balears_Illes	BalearsIlles
+BalearsIlles	BalearsIlles
 Barcelona	Cataluna
 Burgos	CastillayLeon
 Caceres	Extremadura
@@ -13,7 +13,7 @@ Cadiz	Andalucia
 Castellon_Castello	ComunitatValenciana
 CiudadReal	CastillaLaMancha
 Cordoba	Andalucia
-Coruna_A	Galicia
+CorunaA	Galicia
 Cuenca	CastillaLaMancha
 Girona	Cataluna
 Granada	Andalucia
@@ -24,7 +24,7 @@ Huesca	Aragon
 Jaen	Andalucia
 Leon	CastillayLeon
 Lleida	Cataluna
-Rioja_La	RiojaLa
+RiojaLa	RiojaLa
 Lugo	Galicia
 Madrid	MadridComunidadde
 Malaga	Andalucia
@@ -33,7 +33,7 @@ Navarra	NavarraComunidadForalde
 Ourense	Galicia
 Asturias	AsturiasPrincipadode
 Palencia	CastillayLeon
-Palmas_Las	Canarias
+PalmasLas	Canarias
 Pontevedra	Galicia
 Salamanca	CastillayLeon
 SantaCruzdeTenerife	Canarias

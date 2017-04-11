@@ -1,35 +1,34 @@
-# Lee y procesa los nombres de comunidad autonoma y provincia utilizando w3m anadiendo los codigos a cada nombre
+# Lee y procesa los nombres de comunidad autonoma y provincia automaticamente utilizando w3m anadiendo los
+# codigos a cada nombre y eliminando caracteres conflictivos
 
 cd temp
-# Obtencion de los codigos de comunidad autonoma
+## Obtencion de los codigos de comunidad autonoma
 w3m http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm > cod_ccaa_bruto
-linea0=$(cat cod_ccaa_bruto | grep -n "comunidades y ciudades aut" | cut -d ':' -f 1)
-tail -n +$linea0 cod_ccaa_bruto | head -n 22 | grep [0-9] | sed 's/í/i/g' | sed 's/ó/o/g' | sed 's/ñ/n/g' | sed "s/,//g" | sed  -E "s/[[:space:]]+/ /g" > cod_ccaa_aux
-rm cod_ccaa_bruto
+linea0=$(cat cod_ccaa_bruto | grep -n "comunidades y ciudades aut" | cut -d ':' -f 1) # Linea en la que empieza
+tail -n +$linea0 cod_ccaa_bruto | head -n 22 | grep [0-9] > cod_ccaa_preprocesado # Se toma el fragmento con informacion
 
-#cat cod_ccaa | awk '{print $1}' > cod_ccaa_n
-#cat cod_ccaa | cut -d' ' -f2-10 | sed 's/ //g' | sed 's/-/_/g' > cod_ccaa_c
-#rm cod_ccaa
+# Se eliminan todos los caracteres especiales y se procesa para eliminar
+cat cod_ccaa_preprocesado | sed 's/á/a/g; s/é/e/g; s/í/i/g; s/ó/o/g; s/ú/u/g; s/ñ/n/g; s/,//g; s/ /_/1; s/ //g; s/-//g'  | sed  -E "s/[[:space:]]+/ /g"  > cod_ccaa
 
-cat cod_ccaa_aux | sed -e 's/ /_/1' | sed 's/ //g' |  sed 's/-//g' > cod_ccaa
-rm cod_ccaa_aux
+rm cod_ccaa_preprocesado
 
-# sed '2q;d' cod_ccaa_c
+## Obtencion de los codigos de provincia
+w3m http://www.ine.es/daco/daco42/codmun/cod_provincia.htm > cod_pp_bruto
+linea0=$(cat cod_pp_bruto | grep -n "provincias con sus" | cut -d ':' -f 1)
+tail -n +$linea0 cod_pp_bruto | head -n 22 | grep [0-9] > cod_pp_preprocesado
 
-# Obtencion de los codigos de provincia
-w3m http://www.ine.es/daco/daco42/codmun/cod_provincia.htm > cod_p_bruto
-linea0=$(cat cod_p_bruto | grep -n "provincias con sus" | cut -d ':' -f 1)
-tail -n +$linea0 cod_p_bruto | head -n 22 | grep [0-9] | sed 's/í/i/g' | sed 's/ó/o/g' | sed 's/ñ/n/g' | sed 's/á/a/g' | sed 's/é/e/g' > cod_p
+cat cod_pp_preprocesado | sed 's/á/a/g; s/é/e/g; s/í/i/g; s/ó/o/g; s/ú/u/g; s/ñ/n/g; s/,//g; s/Á/A/g; s/É/E/g ; s/Í/I/g ; s/Ó/O/g ; s/Ú/U/g; s/è/e/g' > cod_pp_procesado
 
-rm cod_p_bruto
+rm cod_pp_bruto
+rm cod_pp_preprocesado
 
-# Separamos ordenadamente los codigos y provincias
-cat cod_p | grep -Eo "[0-9]+" > cod_p_n
-cat cod_p | grep -Eo "[^0-9]+" > cod_p_paux
-rm cod_p
+# Separamos ordenadamente los codigos y provincias, -o toma solo la coincidencia y no la linea entera
+cat cod_pp_procesado | grep -Eo "[0-9]+" > cod_p_n
+cat cod_pp_procesado | grep -Eo "[^0-9]+" > cod_p_paux
+rm cod_pp
 
-#cat cod_p_paux | sed "s/ /_/g" | sed "s/,/_/g" > cod_p_p
-cat cod_p_paux | awk '{print $1 $2 $3 $4}' | sed "s/,/_/g" | sed "s/\//_/g" | sed "s/è/e/g" | sed "s/Á/A/g" > pp
+# Eliminar espacios y barras de los nombres
+cat cod_p_paux | cat cod_p_paux |  sed " s/\//_/g; s/ //g" > pp
 rm cod_p_paux
 
 # Por ultimo pegamos ambas columnas con una barra baja separandolas
@@ -38,5 +37,5 @@ paste --delimiters=_ cod_p_n pp > socod_pp
 sort socod_pp > cod_pp
 rm socod_pp
 
-rm cod_p_n # NO se borran los nombres de las provincias, se usan despues
+rm cod_p_n # NO se borran los nombres de las provincias pp, se usan despues para vincularlos con la ca
 cd ..

@@ -1,4 +1,6 @@
-# Genera el listado de urls para descargar los ficheros automaticamente mediante wget
+# Genera el listado de urls y los almacena en el archivo urls para descargar los ficheros automaticamente
+# mediante wget. Debe existir un directorio llamado temp en el directorio.
+
 cd temp
 
 if [ -f urls ]
