@@ -29,26 +29,45 @@ do
 done
 
 #Comprobaciones iniciales:
-bash comprobaciones.sh  $DIR $AUT
+bash comprobaciones.sh $DIR $AUT
+INCOMPLETA=$(cat temp/inc)
+rm temp/inc
 
-if [ $INF == 1 ] || [ $INF == 2 ]
-then
-	printf "\n -----> 1) Descargando archivos... \n \n"
+if [ $INCOMPLETA == 1 ]; then
+	PASO=$( tail -1 $DIR/.progreso | cut -d"_" -f 1 )
+else
+	PASO=1
 fi
-bash descarga_zips.sh $DIR $INF 1
+if (( PASO <= 1)); then
+	if [ $INF == 1 ] || [ $INF == 2 ]
+	then
+		printf "\n -----> 1) Descargando archivos... \n \n"
+	fi
+	bash descarga_zips.sh $DIR $INF $INCOMPLETA
+	echo "2_0" >> $DIR/.progreso
+	INCOMPLETA=0
+fi
+if (( PASO <= 2)); then
 
-if [ $INF == 1 ] || [ $INF == 2 ]
-then
-        printf "\n -----> 2) Generando estructura de directorios... \n \n"
-fi
-bash gen_codigos.sh $DIR
-bash gen_dirs.sh $DIR $INF
+	if [ $INF == 1 ] || [ $INF == 2 ]
+	then
+        	printf "\n -----> 2) Generando estructura de directorios... \n \n"
+	fi
 
-if [ $INF == 1 ] || [ $INF == 2 ]
-then
-        printf "\n -----> 3) Desempaquetando archivos y generando series temporales en $DIR... \n \n"
+	bash gen_codigos.sh $DIR
+	bash gen_dirs.sh $DIR $INF
+	echo "3_0" >> $DIR/.progreso
+        INCOMPLETA=0
 fi
-bash gestion_zips.sh $DIR $INF
+
+if (( PASO <= 3)); then
+	if [ $INF == 1 ] || [ $INF == 2 ]
+	then
+        	printf "\n -----> 3) Desempaquetando archivos y generando series temporales en $DIR... \n \n"
+	fi
+	bash gestion_zips.sh $DIR $INF $INCOMPLETA
+fi
+rm $DIR/.progreso  # El proceso ha terminado.
 
 if [ $BORRAR == 1 ]
 then
