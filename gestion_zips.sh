@@ -21,7 +21,7 @@ else
 	CONTINUAREN=1
 fi
 
-echo "ESTE ES CONTINUAREN: $CONTINUAREN"
+#echo "ESTE ES CONTINUAREN: $CONTINUAREN"
 
 #Nombres para los archivos de texto de las series
 tipo[1]="Nuclear.txt"
@@ -52,19 +52,28 @@ espacio=" "
 sumar=1
 for zip in *.zip
 do
-	echo "ESTE ES cont_temporal: $cont_temporal"
+	#echo "ESTE ES cont_temporal: $cont_temporal"
 
         if (( $cont_temporal == $CONTINUAREN )) && (( $INCOMPLETA == 1 ))  # Si se interrumpio el proceso debe borrarse la ultima linea del ultimo zip, si existen
 	then
+		if [ $INF == 1 ] || [ $INF == 2 ]
+		then
+        		echo " -----> Se estan corrigiendo las series temporales "
+		fi
+
 		dato_temporal=$(sed "${cont_temporal}q;d" tiempo)
-		echo "ESTE ES dato_temporal: $dato_temporal \n"
+		#echo "ESTE ES dato_temporal: $dato_temporal \n"
 		while read provincia; do
 			for txt in $provincia/*txt; do
 				[[ -f $txt ]] || continue #Comprueba que haya archivos
 				ultimo=$(tail -1 $txt | cut -d" " -f1)
-				echo "ESTE ES $ultimo en $txt y"
+				#echo "ESTE ES $ultimo en $txt y"
 				if [ "$ultimo" == "$dato_temporal" ] ; then
-					echo "Se ha entrado"
+					#echo "Se ha entrado"
+					if [ $INF == 2 ]
+                			then
+                		        	echo " Se esta rectificando $txt "
+			                fi
 					sed -i '$ d' $txt # Borrar la ultima linea. Requiere sed version 3.95 o superior
 				fi
 			done

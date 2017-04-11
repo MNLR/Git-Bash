@@ -33,7 +33,9 @@ bash comprobaciones.sh $DIR $AUT
 INCOMPLETA=$(cat temp/inc)
 rm temp/inc
 
-if [ $INCOMPLETA == 1 ]; then
+if [ $INCOMPLETA == 2 ]; then
+	exit
+elif [ $INCOMPLETA == 1 ]; then
 	PASO=$( tail -1 $DIR/.progreso | cut -d"_" -f 1 )
 else
 	PASO=1

@@ -9,6 +9,7 @@ then
 	if [ "$resp" != "s" ]
 	then
 		printf "Ejecucion cancelada. \n"
+		echo "2" > temp/inc
 		exit
 	fi
 
@@ -28,7 +29,9 @@ then
 			;;
 			*)
 				printf "Ejecucion cancelada. \n"
+				echo "2" > temp/inc
 				exit
+
 			;;
 		esac
 	elif [ -d $DIR ]; then
@@ -44,7 +47,8 @@ then
                         ;;
                         *)
                                 printf "Ejecucion cancelada. \n"
-                                exit
+                        	echo "2" > temp/inc # Para cancelar
+			        exit
                         ;;
                 esac
 	else
@@ -63,6 +67,7 @@ then
                 	;;
                 	*)
                         	printf "Ejecucion cancelada. \n"
+		                echo "2" > temp/inc # Para cancelar
 				exit
 			;;
         	esac
