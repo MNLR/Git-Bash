@@ -6,8 +6,10 @@
 # Script principal del programa para generar las series temporales de produccion de energia en Espana
 # por provincias.
 # Ver README adjunto para las opciones en detalle.
-# Ejemplo de ejecucion:
+# Ejemplos de ejecucion:
+# bash main.sh
 # bash main.sh -d ~/midirectorio
+# bash main.sh -IAd ~/midirectorio
 
 #Valores por defecto
 DIR=$PWD/PETC
@@ -30,13 +32,16 @@ done
 
 #Comprobaciones iniciales:
 bash comprobaciones.sh $DIR $AUT
-INCOMPLETA=$(cat temp/inc)
-rm temp/inc
+INCOMPLETA=$(cat inc)
+rm inc
 
 if [ $INCOMPLETA == 2 ]; then
 	exit
 elif [ $INCOMPLETA == 1 ]; then
 	PASO=$( tail -1 $DIR/.progreso | cut -d"_" -f 1 )
+	if [ $INF == 2 ]; then
+		 echo "Continuando en paso $PASO"
+	fi
 else
 	PASO=1
 fi

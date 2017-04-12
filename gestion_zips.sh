@@ -21,7 +21,6 @@ else
 	CONTINUAREN=1
 fi
 
-#echo "ESTE ES CONTINUAREN: $CONTINUAREN"
 
 #Nombres para los archivos de texto de las series
 tipo[1]="Nuclear.txt"
@@ -33,13 +32,12 @@ tipo[6]="Otros.txt"
 tipo[7]="Total.txt"
 
 ppal=$PWD
-cd temp/zips
 
 # Generamos un fichero con las fechas para las series temporales (columna) y se ordena
-echo {2006..2015}0{1..9} | fold -s | fold -s -w6 | sed '/^\s*$/d' > auxtiempo
-echo {2006..2015}{10..12} | fold -s | fold -s -w6 | sed '/^\s*$/d' >> auxtiempo
-sort auxtiempo > tiempo
-rm auxtiempo
+echo {2006..2015}0{1..9} | fold -s | fold -s -w6 | sed '/^\s*$/d' > temp/zips/auxtiempo
+echo {2006..2015}{10..12} | fold -s | fold -s -w6 | sed '/^\s*$/d' >> temp/zips/auxtiempo
+sort temp/zips/auxtiempo > temp/zips/tiempo
+rm temp/zips/auxtiempo
 
 cont_temporal=1
 
@@ -47,6 +45,7 @@ if (( $INCOMPLETA == 0 )); then
 	mkdir extr
 fi
 
+cd temp/zips
 # Extraccion y procesado
 espacio=" "
 sumar=1
@@ -54,7 +53,7 @@ for zip in *.zip
 do
 	#echo "ESTE ES cont_temporal: $cont_temporal"
 
-        if (( $cont_temporal == $CONTINUAREN )) && (( $INCOMPLETA == 1 ))  # Si se interrumpio el proceso debe borrarse la ultima linea del ultimo zip, si existen
+        if (( $cont_temporal == $CONTINUAREN )) && (( $INCOMPLETA == 1 ))  # Si se interrumpio el proceso debe borrarse la ultima linea del ultimo zip que se quedo a medias, por seguridad
 	then
 		if [ $INF == 1 ] || [ $INF == 2 ]
 		then
@@ -62,14 +61,11 @@ do
 		fi
 
 		dato_temporal=$(sed "${cont_temporal}q;d" tiempo)
-		#echo "ESTE ES dato_temporal: $dato_temporal \n"
 		while read provincia; do
 			for txt in $provincia/*txt; do
 				[[ -f $txt ]] || continue #Comprueba que haya archivos
 				ultimo=$(tail -1 $txt | cut -d" " -f1)
-				#echo "ESTE ES $ultimo en $txt y"
 				if [ "$ultimo" == "$dato_temporal" ] ; then
-					#echo "Se ha entrado"
 					if [ $INF == 2 ]
                 			then
                 		        	echo " Se esta rectificando $txt "

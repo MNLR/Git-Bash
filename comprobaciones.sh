@@ -1,3 +1,13 @@
+## comprobaciones.sh
+## Gestiona el inicio del programa y maneja y comprueba si existe una ejecucion anterior
+## Genera el archivo inc, que informa de como debe continuar la ejecucion:
+##	1: INCOMPLETA
+##	0: COMPLETA
+##	2: CANCELAR EJECUCION
+##
+## Recibe $1, el directorio principal
+## 	  $2, variable de ejecucion automatica
+
 
 DIR=$1
 AUT=$2
@@ -9,7 +19,7 @@ then
 	if [ "$resp" != "s" ]
 	then
 		printf "Ejecucion cancelada. \n"
-		echo "2" > temp/inc
+		echo "2" > inc
 		exit
 	fi
 
@@ -29,28 +39,43 @@ then
 			;;
 			*)
 				printf "Ejecucion cancelada. \n"
-				echo "2" > temp/inc
+				echo "2" > inc
 				exit
-
 			;;
 		esac
 	elif [ -d $DIR ]; then
-                read -p "El directorio especificado ( $DIR ) ya existe. Desea continuar en el (c) o borrarlo (b) (Cualquier otro para cancelar) " resp
-                case $resp in
-                        b|B )
-                                printf "Se ha borrado $DIR. \n"
-                                rm -r $DIR
-                                mkdir $DIR
-                        ;;
-                        c|C )
-                                printf "Ejecutando en $DIR. \n"
-                        ;;
-                        *)
-                                printf "Ejecucion cancelada. \n"
-                        	echo "2" > temp/inc # Para cancelar
-			        exit
-                        ;;
-                esac
+		if [ -d $DIR/01_Andalucia ]; then # Se comprueba que no se completara ya, puesto que $DIR/.progreso se borra al terminar
+			read -p "El directorio especificado ( $DIR ) ya existe y parece que se ejecuto correctamente el programa en el. ¿Desea borrarlo y continuar para recrear los directorios en el? (s) (Cualquier otro para cancelar): " resp
+			case $resp in
+                                s|S )
+                                        printf "Se ha borrado $DIR. \n"
+                                        rm -r $DIR
+                                        mkdir $DIR
+                                ;;
+				*)
+		                        printf "Ejecucion cancelada. \n"
+                                	echo "2" > inc
+                                	exit
+				;;
+			esac
+		else
+                	read -p "El directorio especificado ( $DIR ) ya existe. Desea continuar en el (c) o borrarlo (b) (Cualquier otro para cancelar): " resp
+                	case $resp in
+                        	b|B )
+                               		printf "Se ha borrado $DIR. \n"
+                                	rm -r $DIR
+                                	mkdir $DIR
+                        	;;
+                        	c|C )
+                                	printf "Ejecutando en $DIR. \n"
+                        	;;
+                        	*)
+                                	printf "Ejecucion cancelada. \n"
+                        		echo "2" > inc # Para cancelar
+			        	exit
+                        	;;
+                	esac
+		fi
 	else
 		mkdir $DIR
 	fi
@@ -58,7 +83,7 @@ then
 	# Comprobacion directorio temp
 	if [ -d temp ] && [ $INCOMPLETA == 0 ]
 	then
-        	read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Para poder continuar debe borrarse.  ¿Quiere borrarlo? (s) (cualquier otro para cancelar): " resp
+        	read -p "El directorio temp ya existe, posiblemente de una ejecucion anterior. Si hay una ejecucion incompleta no podra continuarse despues si lo borra. Para poder continuar debe borrarse. ¿Quiere borrarlo? (s) (cualquier otro para cancelar): " resp
         	case $resp in
                 	s|S )
                        		printf "Se ha borrado temp. \n"
@@ -67,7 +92,7 @@ then
                 	;;
                 	*)
                         	printf "Ejecucion cancelada. \n"
-		                echo "2" > temp/inc # Para cancelar
+		                echo "2" > inc # Para cancelar
 				exit
 			;;
         	esac
@@ -88,4 +113,4 @@ else  # Modo automatico
 	mkdir temp
 fi
 
-echo "$INCOMPLETA" > temp/inc
+echo "$INCOMPLETA" > inc
