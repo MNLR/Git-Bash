@@ -19,6 +19,7 @@ then
 	CONTINUAREN=$(( CONTINUAREN + 1 ))
 else
 	CONTINUAREN=1
+	mkdir temp/zips/extr
 fi
 
 
@@ -40,10 +41,6 @@ sort temp/zips/auxtiempo > temp/zips/tiempo
 rm temp/zips/auxtiempo
 
 cont_temporal=1
-
-if (( $INCOMPLETA == 0 )); then
-	mkdir extr
-fi
 
 cd temp/zips
 # Extraccion y procesado
