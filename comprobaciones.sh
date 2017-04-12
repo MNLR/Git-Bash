@@ -24,25 +24,56 @@ then
 	fi
 
 	# Comprobacion directorio
-	if [ -d $DIR ] && [ -f $DIR/.progreso ]
+	if [ -f $DIR/.progreso ] && [ -f temp/pertenencia ] #Comprobacion existencia instalacion incompleta y track de la instalacion en temp
 	then
-		read -p "El directorio especificado ( $DIR ) ya existe y parece que hay una instalacion incompleta. ¿Quiere continuar donde lo dejo (c) o borrarlo y reescribir (b)? (cualquier otro para cancelar): " resp
-		case "$resp" in
-    			b|B )
-        			printf "Se ha borrado $DIR. \n"
-				rm -r $DIR
-				mkdir $DIR
-    			;;
-    			c|C )
-        			printf "Reanudando ejecucion en $DIR. \n"
-    				INCOMPLETA=1
-			;;
-			*)
-				printf "Ejecucion cancelada. \n"
-				echo "2" > inc
-				exit
-			;;
-		esac
+		diranterior=$(cat temp/pertenencia)
+		if [ "$diranterior" == "$DIR"  ]; then
+			read -p "El directorio especificado ( $DIR ) ya existe y parece que hay una instalacion incompleta. ¿Quiere continuar donde lo dejo (c) o borrarlo y reescribir (b)? (cualquier otro para cancelar): " resp
+			case "$resp" in
+    				b|B )
+        				printf "Se ha borrado $DIR. \n"
+					rm -r $DIR
+					mkdir $DIR
+    				;;
+    				c|C )
+        				printf "Reanudando ejecucion en $DIR. \n"
+    					INCOMPLETA=1
+				;;
+				*)
+					printf "Ejecucion cancelada. \n"
+					echo "2" > inc
+					exit
+				;;
+			esac
+		else
+			read -p  "El directorio $DIR existe y tiene una ejecucion incompleta, pero no es posible reanudarla pues se ha manipulado temp. Para continuar se deben borrar temp y $DIR y empezar de cero, ¿Continuar? (s) (cualquier otro para cancelar) " resp
+			case $resp in
+				s|S)
+					rm -r $DIR
+					mkdir $DIR
+					rm -r temp
+				;;
+				*)
+                                        printf "Ejecucion cancelada. \n"
+                                        echo "2" > inc
+                                        exit
+				;;
+			esac
+		fi
+	elif [ -f $DIR/.progreso ]; then
+			read -p  "El directorio $DIR existe y tiene una ejecucion incompleta, pero no es posible reanudar la ejecucion, pues se ha manipulado temp.  Para continuar se deben borrar temp y $DIR y empezar de cero, ¿Continuar? (s) (cualquier otro para cancelar): "
+                        case $resp in
+                                s|S)
+                                        rm -r $DIR
+                                        mkdir $DIR
+                                        rm -r temp
+                                ;;
+                                *)
+                                        printf "Ejecucion cancelada. \n"
+                                        echo "2" > inc
+                                        exit
+                                ;;
+                        esac
 	elif [ -d $DIR ]; then
 		if [ -d $DIR/01_Andalucia ]; then # Se comprueba que no se completara ya, puesto que $DIR/.progreso se borra al terminar
 			read -p "El directorio especificado ( $DIR ) ya existe y parece que se ejecuto correctamente el programa en el. ¿Desea borrarlo y continuar para recrear los directorios en el? (s) (Cualquier otro para cancelar): " resp
@@ -89,6 +120,7 @@ then
                        		printf "Se ha borrado temp. \n"
                         	rm -r temp
                         	mkdir temp
+				echo "$DIR" > temp/pertenencia
                 	;;
                 	*)
                         	printf "Ejecucion cancelada. \n"
@@ -98,6 +130,7 @@ then
         	esac
 	elif [ $INCOMPLETA == 0 ]; then
 		mkdir temp
+		echo "$DIR" > temp/pertenencia
 	fi
 
 else  # Modo automatico
@@ -111,6 +144,7 @@ else  # Modo automatico
         fi
 	mkdir $DIR
 	mkdir temp
+	echo "$DIR" > temp/pertenencia
 fi
 
 echo "$INCOMPLETA" > inc
