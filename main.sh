@@ -45,29 +45,26 @@ elif [ $INCOMPLETA == 1 ]; then
 else
 	PASO=1
 fi
-if (( PASO <= 1)); then
-	if [ $INF == 1 ] || [ $INF == 2 ]
-	then
+if (( PASO <= 1 )); then
+	if [ $INF == 1 ] || [ $INF == 2 ]; then
 		printf "\n -----> 1) Descargando archivos... \n \n"
 	fi
 	bash descarga_zips.sh $DIR $INF $INCOMPLETA
 	echo "2_0" >> $DIR/.progreso
 	INCOMPLETA=0
 fi
-if (( PASO <= 2)); then
+if (( PASO <= 2 )); then
 
-	if [ $INF == 1 ] || [ $INF == 2 ]
-	then
+	if [ $INF == 1 ] || [ $INF == 2 ]; then
         	printf "\n -----> 2) Generando estructura de directorios... \n \n"
 	fi
-
 	bash gen_codigos.sh $DIR
 	bash gen_dirs.sh $DIR $INF
 	echo "3_0" >> $DIR/.progreso
         INCOMPLETA=0
 fi
 
-if (( PASO <= 3)); then
+if (( PASO <= 3 )); then
 	if [ $INF == 1 ] || [ $INF == 2 ]
 	then
         	printf "\n -----> 3) Desempaquetando archivos y generando series temporales en $DIR... \n \n"

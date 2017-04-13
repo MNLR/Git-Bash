@@ -13,17 +13,17 @@ else
 	opcion=
 fi
 
+if [ -f temp/dirs ]; then # Debe rehacerse si quedo incompleto para no duplicar rutas
+        rm temp/dirs
+	rm -r $DIR/*/ # Para evitar errores se eliminan todos los directorios
+fi
+
 while read c; do
   	mkdir $opcion $DIR/$c
 done <temp/cod_ccaa
 
 cont=1
 sumar=1
-
-if [ -f temp/dirs ]
-then
-	rm temp/dirs
-fi
 
 while read c_p; do
 	p=$(echo $c_p | grep -Fof temp/pp)
