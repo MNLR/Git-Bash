@@ -22,7 +22,10 @@ y el directorio principal, DIR, puede ser especificado por el usuario (ver opcio
 200602 62933
 ........
 
-_______________________________________________________________________________________________________________
+Es posible reanudar una instalación que quedó incompleta volviendo a ejecutar el programa sobre el mismo directorio, se le preguntará si quiere continuar donde lo dejó. En tal caso, no borre temp ni inicie otra instalación en otro directorio. 
+
+Para los pasos 1 y 2 (Descarga de zips y generación de directorios) se requiere acceso a internet, aunque es posible continuar una instalación incompleta sin internet si se completó el paso 2. Si el programa se detiene mientras ejecuta el paso 1 o 2 interrúmpalo (CTRL+C), compruebe la conexión a internet y reanúdelo tras disponer de conexión.
+______________________________________________________________________________________________________________
 
 EJECUCIÓN
 
@@ -31,12 +34,11 @@ Para ejecutar el programa:
 Esto ejecutará el programa principal y generará la estructura de directorios en el directorio por defecto, PETC
 
 Si se quiere especificar el directorio:
-	bash main.sh -d directorio
+	bash main.sh -d [directorio]
 
 Ejemplo: 
 	bash main.sh -d /home/Usuario/Midirectorio
 
-Es posible interrumpir el proceso y reanudarlo más tarde volviendo a ejecutar el programa sobre el mismo directorio, se le preguntará si quiere continuar donde lo dejó. En tal caso, no borre temp ni inicie otra instalación en otro directorio. 
 _______________________________________________________________________________________________________________
 
 OPCIONES

@@ -46,6 +46,13 @@ else
 	PASO=1
 fi
 if (( PASO <= 1 )); then
+	# Comprobacion de conexion a internet o la pagina
+	wget -q --spider http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm #Solo comprueba disponibilidad
+	if [ $? -ne 0 ]; then
+        	printf "No hay conexion a internet o las paginas de las que depende el script no estan disponibles. Ejecucion cancelada. \n"
+   	      	exit
+	fi
+
 	if [ $INF == 1 ] || [ $INF == 2 ]; then
 		printf "\n -----> 1) Descargando archivos... \n \n"
 	fi
@@ -54,10 +61,15 @@ if (( PASO <= 1 )); then
 	INCOMPLETA=0
 fi
 if (( PASO <= 2 )); then
-
 	if [ $INF == 1 ] || [ $INF == 2 ]; then
         	printf "\n -----> 2) Generando estructura de directorios... \n \n"
 	fi
+	wget -q --spider http://www.ine.es/daco/daco42/codmun/cod_ccaa.htm #Solo comprueba disponibilidad
+        if [ $? -ne 0 ]; then
+                printf "No hay conexion a internet o las paginas de las que depende el script no estan disponible. Cancelando. \n"
+                exit
+        fi
+
 	bash gen_codigos.sh $DIR
 	bash gen_dirs.sh $DIR $INF
 	echo "3_0" >> $DIR/.progreso

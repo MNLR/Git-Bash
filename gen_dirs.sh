@@ -1,7 +1,12 @@
 # Crea los directorios y subdirectorios de acuerdo a las reglas en p-ca
 # Tambien almacena en un archivo de texto las direcciones de los directorios
 # ordenadas de acuerdo a cod_p. Esto permite asignar eficientemente las series temporales
-# a los directorios correspondientes
+# a los directorios correspondientes.
+# Entrada:
+# $1: Directorio de instalacion
+# $2: Nivel de informacion
+
+set -e
 
 DIR=$1
 INF=$2

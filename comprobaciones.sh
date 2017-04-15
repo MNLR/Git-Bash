@@ -1,13 +1,13 @@
-## comprobaciones.sh
-## Gestiona el inicio del programa y maneja y comprueba si existe una ejecucion anterior
-## Genera el archivo inc, que informa de como debe continuar la ejecucion:
-##	1: INCOMPLETA
-##	0: COMPLETA
-##	2: CANCELAR EJECUCION
-##
-## Recibe $1, el directorio principal
-## 	  $2, variable de ejecucion automatica
-
+# Gestiona el inicio del programa y maneja y comprueba si existe una ejecucion anterior
+# Genera el archivo inc, que informa de como debe continuar la ejecucion:
+#	1: INCOMPLETA
+#	0: COMPLETA
+#	2: CANCELAR EJECUCION
+#
+# Parametros de entrada:
+# $1: Directorio de instalacion
+# $2: 1 para modo automatico
+#     0 si no
 
 DIR=$1
 AUT=$2
@@ -33,10 +33,10 @@ then
     				b|B )
         				printf "Se ha borrado $DIR. \n"
 					rm -r $DIR
-					mkdir $DIR
+					mkdir -p $DIR
     				;;
     				c|C )
-        				printf "Reanudando ejecucion en $DIR. \n"
+        				printf "Reanudando ejecucion en $DIR... \n"
     					INCOMPLETA=1
 				;;
 				*)
@@ -50,7 +50,7 @@ then
 			case $resp in
 				s|S)
 					rm -r $DIR
-					mkdir $DIR
+					mkdir -p $DIR
 					rm -r temp
 				;;
 				*)
@@ -65,7 +65,7 @@ then
                         case $resp in
                                 s|S)
                                         rm -r $DIR
-                                        mkdir $DIR
+                                        mkdir -p $DIR
                                         rm -r temp
                                 ;;
                                 *)
@@ -81,7 +81,7 @@ then
                                 s|S )
                                         printf "Se ha borrado $DIR. \n"
                                         rm -r $DIR
-                                        mkdir $DIR
+                                        mkdir -p $DIR
                                 ;;
 				*)
 		                        printf "Ejecucion cancelada. \n"
@@ -95,7 +95,7 @@ then
                         	b|B )
                                		printf "Se ha borrado $DIR. \n"
                                 	rm -r $DIR
-                                	mkdir $DIR
+                                	mkdir -p $DIR
                         	;;
                         	c|C )
                                 	printf "Ejecutando en $DIR. \n"
@@ -108,7 +108,7 @@ then
                 	esac
 		fi
 	else
-		mkdir $DIR
+		mkdir -p $DIR
 	fi
 
 	# Comprobacion directorio temp
@@ -142,7 +142,7 @@ else  # Modo automatico
         then
                 rm -r temp
         fi
-	mkdir $DIR
+	mkdir -p $DIR
 	mkdir temp
 	echo "$DIR" > temp/pertenencia
 fi

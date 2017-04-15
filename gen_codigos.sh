@@ -1,5 +1,6 @@
 # Lee y procesa los nombres de comunidad autonoma y provincia automaticamente utilizando w3m anadiendo los
 # codigos a cada nombre y eliminando caracteres conflictivos
+set -e
 
 cd temp
 ## Obtencion de los codigos de comunidad autonoma

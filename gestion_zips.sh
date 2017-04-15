@@ -1,6 +1,11 @@
 # Descomprime, extrae y escribe la informacion contenida en los zip descargados en forma de serie temporal.
 # Extrae la tabla 127P de cada archivo .zip (ya ordenados previamente), la procesa y envia cada dato al
 # correspondiente directorio.
+# Parametros de entrada:
+# $1: Directorio de instalacion
+# $2: Nivel de informacion
+# $3: 1 si la instalacion se quedo en este paso
+#     0 si no
 
 DIR=$1
 INF=$2
@@ -76,9 +81,12 @@ do
 	if (( $cont_temporal >= $CONTINUAREN ))
 	then
 		# Extraccion datos
-		unzip -j $opcion -d extr $zip *127P*
-		if [ $INF == 1 ] || [ $INF == 2 ]
-		then
+		if [ $INF == 0 ] || [ $INF == 1 ]; then
+			unzip -j $opcion -d extr $zip *127P* 2>/dev/null
+		else
+			unzip -j $opcion -d extr $zip *127P*
+		fi
+		if [ $INF == 1 ] || [ $INF == 2 ]; then
 			printf "Se esta procesando "
 			ls extr/*txt
 			printf "\n"
@@ -105,7 +113,7 @@ do
 				echo $dato_completo >> $provincia/${tipo[$num]}
 				if [ $INF == 2 ]
         			then
-					printf "  Escribiendo $dato_completo en $provincia/${tipo[$num]}... \n"
+					printf "  Escribiendo $dato_completo en $provincia/${tipo[$num]} \n"
 				fi
 			done
 
