@@ -1,7 +1,6 @@
 INTRODUCCION
 
-Tarea de la shell de UNIX y Git - Métodos de Gestión de la Información
-Autor: Mikel Néstor Legasa Ríos
+Autor: MNLR
 
 Programa de Bash para acceder a las series temporales mensuales de producción eléctrica por provincia publicadas por el Ministerio de Industria y de las direcciones en
 
@@ -24,7 +23,7 @@ y el directorio principal, DIR, puede ser especificado por el usuario (ver opcio
 
 Es posible reanudar una instalación que quedó incompleta volviendo a ejecutar el programa sobre el mismo directorio, se le preguntará si quiere continuar donde lo dejó. En tal caso, no borre temp ni inicie otra instalación en otro directorio. 
 
-Para los pasos 1 y 2 (Descarga de zips y generación de directorios) se requiere acceso a internet, aunque es posible continuar una instalación incompleta sin internet si se completó el paso 2. Si el programa se detiene mientras ejecuta el paso 1 o 2 interrúmpalo (CTRL+C), compruebe la conexión a internet y reanúdelo tras disponer de conexión.
+Para los pasos 1 y 2 (Descarga de zips y generación de directorios) se requiere acceso a internet, aunque es posible continuar una instalación incompleta sin internet si se completó el paso 2. Si el programa se detiene mientras ejecuta el paso 1 o 2 interrúmpalo (CTRL+C), compruebe la conexión a internet y reanúdelo cuando la conexión esté funcional.
 ______________________________________________________________________________________________________________
 
 EJECUCIÓN
